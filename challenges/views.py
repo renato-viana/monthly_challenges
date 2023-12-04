@@ -1,4 +1,5 @@
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.urls import reverse
 
 monthly_challenges = {
     "january": "Eat no meat for the entire month!",
@@ -19,18 +20,13 @@ monthly_challenges = {
 # Create your views here.
 
 def monthly_challenge_by_number(request, month):
-    challenge_text = None
+    months = list(monthly_challenges.keys())
 
-    if month == 1:
-        challenge_text = month
-    elif month == 2:
-        challenge_text = month
-    elif month == 3:
-        challenge_text = month
-    else:
-        return HttpResponseNotFound("This number is not supported!")
+    if month > len(months):
+        return HttpResponseNotFound("Invalid month!")
 
-    return HttpResponse(challenge_text)
+    redirect_month = months[month - 1]
+    return HttpResponseRedirect("/challenges/" + redirect_month)
 
 
 def monthly_challenge(request, month):
