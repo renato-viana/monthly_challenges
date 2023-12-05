@@ -25,7 +25,7 @@ def index(request):
     months = list(monthly_challenges.keys())
 
     for month in months:
-        capitalized_month = month.capitalize()
+        capitalized_month = month
         month_path = reverse("month-challenge", args=[month])
         list_items += f"<li><a href=\"{month_path}\">{capitalized_month}</a></li>"
 
@@ -49,7 +49,7 @@ def monthly_challenge(request, month):
         challenge_text = monthly_challenges[month]
         return render(request, "challenges/challenge.html", {
             "text": challenge_text,
-            "month_name": month.capitalize()
+            "month_name": month
         })
     except KeyError:
         return HttpResponseNotFound("<h1>This month is not supported!</h1>")
